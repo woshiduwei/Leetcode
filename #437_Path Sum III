@@ -1,0 +1,22 @@
++public class Solution {
+ +    public int pathSum(TreeNode root, int sum) {
+ +        int count = helper(root, sum);//Caculate path numbers from root
+ +        if(root == null){
+ +            return count;
+ +        }
+ +        return helper(root, sum) + pathSum(root.left, sum) + pathSum(root.right, sum);//include left and right child
+ +    }
+ +    public int helper(TreeNode root, int sum){//count the path number that root node must be included 
+ +        if(root == null){
+ +            return 0;
+ +        }
+ +        if(sum == root.val){
+ +            return helper(root.left, sum - root.val) + helper(root.right, sum - root.val) + 1;
+ +        }
+ +        else{
+ +            return helper(root.left, sum - root.val) + helper(root.right, sum - root.val);
+ +        }
+ +        
+ +        
+ +    }
+ +}
