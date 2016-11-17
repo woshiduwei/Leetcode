@@ -1,0 +1,65 @@
+public class Solution {
+    public List<String> readBinaryWatch(int num) {
+        /*List<String> res = new ArrayList<String>();
+        for(int hour = 0; hour < 12; hour++){
+            for(int minute = 0; minute < 60; minute++){
+                if(getcount(hour) + getcount(minute) == num){
+                    StringBuilder temp = new StringBuilder();
+                    temp.append(hour);
+                    temp.append(":");
+                    if(minute < 10){
+                        temp.append(0);
+                        temp.append(minute);
+                    }
+                    else{
+                        temp.append(minute);
+                    }
+                    res.add(temp.toString());
+                }
+            }
+        }
+        return res;*/
+        List<String> res = new ArrayList<String>();
+        int[] time = {1, 2, 4, 8, 1, 2, 4, 8, 16, 32};
+        helper(res, time, 0, 0, 0, num);
+        return res;
+    }
+    public void helper(List<String> res, int[] time, int start, int hour, int minute, int num){
+        if(num == 0){
+                    StringBuilder temp = new StringBuilder();
+                    temp.append(hour);
+                    temp.append(":");
+                    if(minute < 10){
+                        temp.append(0);
+                        temp.append(minute);
+                    }
+                    else{
+                        temp.append(minute);
+                    }
+                    res.add(temp.toString());
+        }
+        for(int i = start; i < 10; i++){//此递归用于遍历两个或者多个变量，设置好数组
+            if(i < 4){
+                if(hour + time[i] >= 12){//剪支
+                    continue;
+                }
+                helper(res, time, i + 1, hour + time[i], minute, num - 1);//如果i < 4, 只能遍历hour
+            }
+            else{
+                if(minute + time[i] >= 60){//剪支
+                    continue;
+                }
+                helper(res, time, i + 1, hour, minute + time[i], num - 1);//i > 9, 只能遍历minute
+                
+            }
+        }
+    }
+    /*public int getcount(int n){
+        int count = 0;
+        while(n > 0){
+            count += n & 1;
+            n = (n >> 1);
+        }
+        return count;
+    }*/
+}
